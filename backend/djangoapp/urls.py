@@ -1,11 +1,9 @@
-from django.urls import path, include
-from . import views
-from django.urls import path, include
-from .models import DataOwner, DataDomain, Rules, Dashboards, DashboardsRules
-from django.contrib import admin
-from django.views.generic import TemplateView
+from rest_framework import routers
 
-urlpatterns = [
-    
-]
+from djangoapp.views.rules import RulesViewSet
 
+
+router = routers.DefaultRouter()
+router.register(r'rules', RulesViewSet)
+
+urlpatterns = []
