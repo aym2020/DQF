@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table } from 'antd'
+import { Table, Button } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 
 const columns: ColumnsType<Rules> = [
@@ -42,7 +42,7 @@ const columns: ColumnsType<Rules> = [
     title: 'Data Owner',
     dataIndex: 'data_owner',
     key: 'data_owner',
-    render: (text, record) => <a>{record.data_owner.name}</a>
+    render: (text, record) => <a>{record.data_owner?.name}</a>
   },
 
   {
@@ -77,11 +77,19 @@ interface Rules {
 
 interface RulesTableProps {
   rules: Rules[]
+  setIsFormVisible: (value: boolean) => void
 }
 
-const RulesTable: React.FC<RulesTableProps> = ({ rules }) => {
+const RulesTable: React.FC<RulesTableProps> = ({ rules, setIsFormVisible }) => {
   return (
-        <Table columns={columns} dataSource={rules} />
+    <div>
+      <Button
+        type="primary"
+        onClick={() => { setIsFormVisible(true) }}>
+        Add Rule
+      </Button>
+      <Table columns={columns} dataSource={rules} />
+    </div>
   )
 }
 export default RulesTable
