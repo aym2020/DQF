@@ -42,10 +42,10 @@ class Rules(models.Model):
     id_rule = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=1000, null=True)
-    source = models.CharField(max_length=100)
+    source = models.CharField(max_length=100, null=True)
     data_dimension = models.CharField(max_length=100, choices=DATA_DIM_CHOICES, null=True)
-    data_owner = models.ForeignKey(DataOwner, on_delete=models.CASCADE, related_name='data_owner', null=True)
-    data_domain = models.ForeignKey(DataDomain, on_delete=models.CASCADE, related_name='data_domain', null=True)
+    data_owner = models.ForeignKey(DataOwner, on_delete=models.CASCADE, related_name='data_owner', null=True, blank=True)
+    data_domain = models.ForeignKey(DataDomain, on_delete=models.CASCADE, related_name='data_domain', null=True, blank=True)
     version = models.IntegerField
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
