@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 
 import RulesAPI from 'plugins/rulesAPI'
-import RulesTable from './components/rules-table'
-import AddRule from 'pages/addRule'
+import RulesTable from './components/rule-table'
+import AddRule from 'pages/rules/components/create-rule'
 import { Layout } from 'antd'
 
 const { Content } = Layout
 
 const Rules: React.FunctionComponent = () => {
-  const [rules, setRules] = useState([])
+  const [rules, setRules] = useState<any>([])
   const [isFormVisible, setIsFormVisible] = useState(false)
 
   useEffect(() => {
@@ -23,11 +23,19 @@ const Rules: React.FunctionComponent = () => {
     void getRules()
   }, [])
 
+  const insertNewRule = (rule: any): void => {
+    setIsFormVisible(false)
+
+    const filteredRules = rules.filter((item: any) => item.name !== rule.name)
+    filteredRules.unshift(rule)
+    setRules(filteredRules)
+  }
+
   return (
     <Layout>
       <Content>
         { isFormVisible
-          ? <AddRule/>
+          ? <AddRule insertNewData={insertNewRule} />
           : <RulesTable rules={rules} setIsFormVisible={setIsFormVisible} /> }
       </Content>
     </Layout>
