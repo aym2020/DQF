@@ -3,9 +3,7 @@ import React, { useEffect, useState } from 'react'
 import RulesAPI from 'plugins/rulesAPI'
 import RulesTable from './components/rule-table'
 import AddRule from 'pages/rules/components/create-rule'
-import { Layout } from 'antd'
-
-const { Content } = Layout
+import BasicPage from 'library/page-templates/basic-page'
 
 const Rules: React.FunctionComponent = () => {
   const [rules, setRules] = useState<any>([])
@@ -32,13 +30,11 @@ const Rules: React.FunctionComponent = () => {
   }
 
   return (
-    <Layout>
-      <Content>
+    <BasicPage>
         { isFormVisible
           ? <AddRule insertNewData={insertNewRule} />
           : <RulesTable rules={rules} setIsFormVisible={setIsFormVisible} /> }
-      </Content>
-    </Layout>
+      </BasicPage>
   )
 }
 

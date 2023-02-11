@@ -1,8 +1,12 @@
 import React from 'react'
-import { Table, Button } from 'antd'
+import { Table, Button, Typography } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
+import { TableHeader } from 'library/tables'
 
-const columns: ColumnsType<Rules> = [
+import { type Rule } from 'types'
+const { Title } = Typography
+
+const columns: ColumnsType<Rule> = [
   {
     title: 'Name',
     dataIndex: 'name',
@@ -14,28 +18,28 @@ const columns: ColumnsType<Rules> = [
     title: 'Description',
     dataIndex: 'description',
     key: 'descritpion',
-    render: (text) => <a>{text}</a>
+    render: (text) => <span>{text}</span>
   },
 
   {
     title: 'Source',
     dataIndex: 'source',
     key: 'source',
-    render: (text) => <a>{text}</a>
+    render: (text) => <span>{text}</span>
   },
 
   {
     title: 'Data Dimension',
     dataIndex: 'data_dimension',
     key: 'data_dimension',
-    render: (text) => <a>{text}</a>
+    render: (text) => <span>{text}</span>
   },
 
   {
     title: 'Status',
     dataIndex: 'status',
     key: 'status',
-    render: (text) => <a>{text}</a>
+    render: (text) => <span>{text}</span>
   },
 
   {
@@ -49,14 +53,14 @@ const columns: ColumnsType<Rules> = [
     title: 'Creation Date',
     dataIndex: 'creation_date',
     key: 'creation_date',
-    render: (text) => <a>{new Date(text).toLocaleDateString()}</a>
+    render: (text) => new Date(text).toLocaleDateString()
   },
 
   {
     title: 'Update Date',
     dataIndex: 'update_date',
     key: 'update_date',
-    render: (text) => <a>{new Date(text).toLocaleDateString()}</a>
+    render: (text) => new Date(text).toLocaleDateString()
   },
 
   {
@@ -65,34 +69,30 @@ const columns: ColumnsType<Rules> = [
     key: 'suspension_date',
     render: (text) => {
       if (typeof text === 'string') {
-        return <a>{new Date(text).toLocaleDateString()}</a>
+        return new Date(text).toLocaleDateString()
       }
-      return <a />
+      return ''
     }
   }
 ]
 
-interface Rules {
-  name: string
-  data_owner: {
-    name: string
-  }
-}
-
 interface RulesTableProps {
-  rules: Rules[]
+  rules: Rule[]
   setIsFormVisible: (value: boolean) => void
 }
 
 const RulesTable: React.FC<RulesTableProps> = ({ rules, setIsFormVisible }) => {
   return (
     <div>
-      <Button
-        type="primary"
-        onClick={() => { setIsFormVisible(true) }}>
-        Add Rule
-      </Button>
-      <Table columns={columns} dataSource={rules} />
+      <TableHeader>
+        <Title level={2}>Rules</Title>
+        <Button
+          type="primary"
+          onClick={() => { setIsFormVisible(true) }}>
+          Add Rule
+        </Button>
+    </TableHeader>
+    <Table columns={columns} dataSource={rules} />
     </div>
   )
 }

@@ -31,12 +31,12 @@ class DataDomain(models.Model):
 class Rules(models.Model):
 
     DATA_DIM_CHOICES = (
-        ('Timeliness', 'Timeliness'),
-        ('Completeness', 'Completeness'),
-        ('Consistency', 'Consistency'),
-        ('Uniqueness', 'Uniqueness'),
-        ('Accuracy', 'Accuracy'),
-        ('Integrity', 'Integrity'),
+        ('TIME', 'Timeliness'),
+        ('COMP', 'Completeness'),
+        ('CONS', 'Consistency'),
+        ('UNIQ', 'Uniqueness'),
+        ('ACCU', 'Accuracy'),
+        ('INTE', 'Integrity'),
     )
 
     id_rule = models.AutoField(primary_key=True)

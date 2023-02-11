@@ -15,6 +15,7 @@ router.registry.extend(djangorouter.registry)
 
 urlpatterns = [
     path('api/', include(router.urls)),
+    path('api/', include('djangoapp.urls')),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
 
