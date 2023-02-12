@@ -4,9 +4,10 @@ import RulesAPI from 'plugins/rulesAPI'
 import RulesTable from './components/rule-table'
 import AddRule from 'pages/rules/components/create-rule'
 import BasicPage from 'library/page-templates/basic-page'
+import { type Rule } from 'types'
 
 const Rules: React.FunctionComponent = () => {
-  const [rules, setRules] = useState<any>([])
+  const [rules, setRules] = useState<Rule[]>([])
   const [isFormVisible, setIsFormVisible] = useState(false)
 
   useEffect(() => {

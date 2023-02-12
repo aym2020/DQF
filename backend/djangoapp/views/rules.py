@@ -19,12 +19,22 @@ In this case, it is set to an empty tuple, which means that there are no permiss
 
 from rest_framework import viewsets
 
-from djangoapp.models import Rules
-from djangoapp.serializers.rules import RulesSerializer
+from djangoapp.models import Rules, DataOwner, DataDomain
+from djangoapp.serializers.rules import RulesSerializer, DataOwnerSerializer, DataDomainSerializer
 
 
 # ViewSets define the view behavior.
 class RulesViewSet(viewsets.ModelViewSet):
     queryset = Rules.objects.all()
     serializer_class = RulesSerializer
+    permission_classes = ()
+
+class DataOwnersViewSet(viewsets.ModelViewSet):
+    queryset = DataOwner.objects.all()
+    serializer_class = DataOwnerSerializer
+    permission_classes = ()
+
+class DataDomainsViewSet(viewsets.ModelViewSet):
+    queryset = DataDomain.objects.all()
+    serializer_class = DataDomainSerializer
     permission_classes = ()

@@ -10,13 +10,8 @@ export const fetchConstants = createAsyncThunk(
   }
 )
 
-interface DataDimension {
-  key: string
-  value: string
-}
-
 interface Constants {
-  dataDimensions: DataDimension[]
+  dataDimensions: any
 }
 
 export interface ConstantsState {

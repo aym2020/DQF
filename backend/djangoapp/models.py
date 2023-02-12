@@ -5,7 +5,7 @@ from django.db import models
 class DataOwner(models.Model):
     id_data_owner = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
-    description = models.CharField(max_length=1000)
+    description = models.CharField(max_length=1000, null=True)
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
     suspension_date = models.DateTimeField(default=None, null=True, blank=True)
@@ -18,7 +18,7 @@ class DataOwner(models.Model):
 class DataDomain(models.Model):
     id_data_domain = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
-    description = models.CharField(max_length=1000)
+    description = models.CharField(max_length=1000, null=True)
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
     suspension_date = models.DateTimeField(default=None, null=True, blank=True)

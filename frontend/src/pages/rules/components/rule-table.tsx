@@ -50,6 +50,13 @@ const columns: ColumnsType<Rule> = [
   },
 
   {
+    title: 'Data Domain',
+    dataIndex: 'data_domain',
+    key: 'data_domain',
+    render: (text, record) => <a>{record.data_domain?.name}</a>
+  },
+
+  {
     title: 'Creation Date',
     dataIndex: 'creation_date',
     key: 'creation_date',

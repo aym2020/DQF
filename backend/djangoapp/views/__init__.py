@@ -1,1 +1,1 @@
-from .rules import RulesViewSet
+from .rules import RulesViewSet, DataOwnersViewSet, DataDomainsViewSet
