@@ -1,9 +1,7 @@
 from django.db import models
 
-
 # Create your models here.
 class DataOwner(models.Model):
-    id_data_owner = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=1000, null=True)
     creation_date = models.DateTimeField(auto_now_add=True)
@@ -16,7 +14,6 @@ class DataOwner(models.Model):
 
 
 class DataDomain(models.Model):
-    id_data_domain = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=1000, null=True)
     creation_date = models.DateTimeField(auto_now_add=True)
@@ -39,13 +36,12 @@ class Rules(models.Model):
         ('INTE', 'Integrity'),
     )
 
-    id_rule = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=1000, null=True)
     source = models.CharField(max_length=100, null=True)
     data_dimension = models.CharField(max_length=100, choices=DATA_DIM_CHOICES, null=True)
-    data_owner = models.ForeignKey(DataOwner, on_delete=models.CASCADE, related_name='data_owner', null=True, blank=True)
-    data_domain = models.ForeignKey(DataDomain, on_delete=models.CASCADE, related_name='data_domain', null=True, blank=True)
+    data_owner = models.ForeignKey(DataOwner, on_delete=models.CASCADE, related_name='data_owner')
+    data_domain = models.ForeignKey(DataDomain, on_delete=models.CASCADE, related_name='data_domain')
     version = models.IntegerField
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
@@ -57,7 +53,6 @@ class Rules(models.Model):
 
 
 class Dashboards(models.Model):
-    id_dashboard = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=1000)
     periodicity = models.CharField(max_length=100)
@@ -73,7 +68,6 @@ class Dashboards(models.Model):
 
 
 class DashboardsRules(models.Model):
-    sid = models.AutoField(primary_key=True)
     dashboard = models.ForeignKey(Dashboards, on_delete=models.CASCADE, related_name='dashboard')
     rule = models.ForeignKey(Rules, on_delete=models.CASCADE, related_name='rule')
 

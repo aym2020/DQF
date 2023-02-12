@@ -18,19 +18,19 @@ from djangoapp.models import Rules, DataOwner, DataDomain
 class DataOwnerSerializer(serializers.ModelSerializer):
     class Meta:
         model = DataOwner
-        fields = ['id_data_owner', 'name', 'description', 'creation_date', 'update_date', 'suspension_date']
+        fields = ['id', 'name', 'description', 'creation_date', 'update_date', 'suspension_date']
 
 class DataDomainSerializer(serializers.ModelSerializer):
     class Meta:
         model = DataDomain
-        fields = ['id_data_domain', 'name', 'description', 'creation_date', 'update_date', 'suspension_date']
+        fields = ['id', 'name', 'description', 'creation_date', 'update_date', 'suspension_date']
 
 class RulesSerializer(serializers.ModelSerializer):
-    data_owner = DataOwnerSerializer(required=False, read_only=True)
-    data_domain = DataDomainSerializer(required=False, read_only=True)
-    data_owner = serializers.PrimaryKeyRelatedField(queryset=DataOwner.objects.all(), required=False)
-    data_domain = serializers.PrimaryKeyRelatedField(queryset=DataDomain.objects.all(), required=False)
+    data_owner = DataOwnerSerializer(read_only=True)
+    data_owner_id = serializers.IntegerField()
+    data_domain = DataDomainSerializer(read_only=True)
+    data_domain_id = serializers.IntegerField()
     
     class Meta:
         model = Rules
-        fields = ['name', 'description', 'source', 'data_dimension', 'data_owner', 'data_domain', 'creation_date', 'update_date', 'suspension_date', 'status']
+        fields = ['id', 'name', 'description', 'source', 'data_dimension', 'data_owner', 'data_owner_id', 'data_domain', 'data_domain_id', 'creation_date', 'update_date', 'suspension_date', 'status']
