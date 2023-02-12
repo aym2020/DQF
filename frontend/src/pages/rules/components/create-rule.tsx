@@ -22,7 +22,7 @@ const AddRule: React.FC<RulesTableProps> = ({ insertNewData }) => {
     const getDataOwners = async (): Promise<void> => {
       try {
         const response = await RulesAPI.get('dataowners')
-        setDataOwners(response.data)
+        setDataOwners(response.data.results)
       } catch (error) {
         console.log('oh no request failed')
       }
@@ -36,7 +36,7 @@ const AddRule: React.FC<RulesTableProps> = ({ insertNewData }) => {
     const getDataDomains = async (): Promise<void> => {
       try {
         const response = await RulesAPI.get('datadomains')
-        setDataDomains(response.data)
+        setDataDomains(response.data.results)
       } catch (error) {
         console.log('oh no request failed')
       }
@@ -94,24 +94,24 @@ const AddRule: React.FC<RulesTableProps> = ({ insertNewData }) => {
           </Select>
       </Form.Item>
 
-      <Form.Item name="data_owner" label="Data Owner" rules={[{ required: true }]}>
+      <Form.Item name="data_owner_id" label="Data Owner" rules={[{ required: true }]}>
         <Select
           placeholder="Select a option and change input text above"
           allowClear
         >
           { dataowners.map((dataowner) => (
-            <Option value={dataowner.id_data_owner} key={dataowner.id_data_owner}>{dataowner.name as React.ReactNode}</Option>
+            <Option value={dataowner.id} key={dataowner.id}>{dataowner.name as React.ReactNode}</Option>
           ))}
           </Select>
       </Form.Item>
 
-      <Form.Item name="datadomain" label="Data Domain" rules={[{ required: true }]}>
+      <Form.Item name="data_domain_id" label="Data Domain" rules={[{ required: true }]}>
         <Select
           placeholder="Select a option and change input text above"
           allowClear
         >
           { datadomains.map((datadomain) => (
-            <Option value={datadomain.id_data_domain} key={datadomain.id_data_domain}>{datadomain.name as React.ReactNode}</Option>
+            <Option value={datadomain.id} key={datadomain.id}>{datadomain.name as React.ReactNode}</Option>
           ))}
           </Select>
       </Form.Item>

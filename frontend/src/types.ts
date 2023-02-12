@@ -1,22 +1,17 @@
 export interface Rule {
+  id: number
   name: string
-  data_owner: {
-    id_data_owner: number
-    name: string
-  }
-  data_domain: {
-    id_data_domain: number
-    name: string
-  }
+  data_owner: DataOwner
+  data_domain: DataDomain
 }
 
 export interface DataOwner {
-  id_data_owner: number
+  id: number
   name: string
 }
 
 export interface DataDomain {
-  id_data_domain: number
+  id: number
   name: string
 }
 

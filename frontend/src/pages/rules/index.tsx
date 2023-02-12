@@ -5,21 +5,26 @@ import RulesTable from './components/rule-table'
 import AddRule from 'pages/rules/components/create-rule'
 import BasicPage from 'library/page-templates/basic-page'
 import { type Rule } from 'types'
+import { TABLE_PAGE_SIZE } from 'utils'
 
 const Rules: React.FunctionComponent = () => {
   const [rules, setRules] = useState<Rule[]>([])
+  const [total, setTotal] = useState<number>(0)
   const [isFormVisible, setIsFormVisible] = useState(false)
 
-  useEffect(() => {
-    const getRules = async (): Promise<void> => {
-      try {
-        const response = await RulesAPI.get('rules')
-        setRules(response.data)
-      } catch (error) {
-        console.log('oh no request failed')
-      }
+  const getRules = async (page: number): Promise<void> => {
+    const offset = (page - 1)
+    try {
+      const response = await RulesAPI.get(`rules?offset=${offset * TABLE_PAGE_SIZE}&limit=${TABLE_PAGE_SIZE}`)
+      setRules(response.data.results)
+      setTotal(response.data.total)
+    } catch (error) {
+      console.log('oh no request failed')
     }
-    void getRules()
+  }
+
+  useEffect(() => {
+    void getRules(1)
   }, [])
 
   const insertNewRule = (rule: any): void => {
@@ -30,11 +35,20 @@ const Rules: React.FunctionComponent = () => {
     setRules(filteredRules)
   }
 
+  const getRulePage = (page: number): void => {
+    void getRules(page)
+  }
+
   return (
     <BasicPage>
         { isFormVisible
           ? <AddRule insertNewData={insertNewRule} />
-          : <RulesTable rules={rules} setIsFormVisible={setIsFormVisible} /> }
+          : <RulesTable
+            rules={rules}
+              setIsFormVisible={setIsFormVisible}
+              getRulePage={getRulePage}
+              total={total}
+              /> }
       </BasicPage>
   )
 }
