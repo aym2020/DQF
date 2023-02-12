@@ -74,8 +74,8 @@ class Dashboards(models.Model):
 
 class DashboardsRules(models.Model):
     sid = models.AutoField(primary_key=True)
-    id_dashboard = models.ForeignKey(Dashboards, on_delete=models.CASCADE)
-    id_rule = models.ForeignKey(Rules, on_delete=models.CASCADE)
+    dashboard = models.ForeignKey(Dashboards, on_delete=models.CASCADE, related_name='dashboard')
+    rule = models.ForeignKey(Rules, on_delete=models.CASCADE, related_name='rule')
 
     def __init__(self, *args, **kwargs):
         super().__init__(args, kwargs)

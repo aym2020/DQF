@@ -26,16 +26,10 @@ class DataDomainSerializer(serializers.ModelSerializer):
         fields = ['id_data_domain', 'name', 'description', 'creation_date', 'update_date', 'suspension_date']
 
 class RulesSerializer(serializers.ModelSerializer):
-    data_owner = DataOwnerSerializer(required=False, many=False)
-    data_domain = DataDomainSerializer(required=False, many=False)
-
-    def create(self, validated_data):
-        data_owner_data = validated_data.pop('data_owner')
-        data_domain_data = validated_data.pop('data_domain')
-        data_owner = DataOwner.objects.get(id_data_owner=data_owner_data['id_data_owner'])
-        data_domain = DataDomain.objects.get(id_data_domain=data_domain_data['id_data_domain'])
-        rules = Rules.objects.create(data_owner=data_owner, data_domain=data_domain, **validated_data)
-        return rules
+    data_owner = DataOwnerSerializer(required=False, read_only=True)
+    data_domain = DataDomainSerializer(required=False, read_only=True)
+    data_owner = serializers.PrimaryKeyRelatedField(queryset=DataOwner.objects.all(), required=False)
+    data_domain = serializers.PrimaryKeyRelatedField(queryset=DataDomain.objects.all(), required=False)
     
     class Meta:
         model = Rules
