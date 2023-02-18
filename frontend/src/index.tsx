@@ -4,10 +4,11 @@ import { RouterProvider } from 'react-router-dom'
 
 import reportWebVitals from './reportWebVitals'
 import router from './router'
-import GlobalStyle from './globalStyles'
 import store from 'store/index'
+
 import { Provider } from 'react-redux'
 import BaseDataProvider from 'providers/baseDataProvider'
+import GlobalStyle from './globalStyles'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

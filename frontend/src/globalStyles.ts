@@ -4,7 +4,6 @@ const GlobalStyle = createGlobalStyle`
     body {
         margin: 0;
         padding: 0;
-        background: #C24A31;
         font-family:  Open-Sans, Helvetica, Sans-Serif;
     }
 `
