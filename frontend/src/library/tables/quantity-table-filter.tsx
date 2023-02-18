@@ -3,49 +3,50 @@ import { Button, Card, Select, Input, Space } from 'antd'
 import { PlusCircleOutlined, ArrowRightOutlined } from '@ant-design/icons'
 import styled from 'styled-components'
 
-// import { type Store } from 'store/index'
-
-const Wrapper = styled.div`
-
-`
-
 const PillWrapper = styled.span`
   position: relative;
   z-index: 20;
 `
 
-interface FilterPillProps {
+interface Props {
   name: string
   applyFilter: any
 }
 
-const FilterPill: React.FunctionComponent<FilterPillProps> = ({ name, applyFilter }) => {
+const QuantityTableFilter: React.FunctionComponent<Props> = ({ name, applyFilter }) => {
   const [method, setMethod] = useState<string>('exact')
   const [value, setValue] = useState(0)
+  const [appliedMethod, setAppliedMethod] = useState<string>('')
+  const [appliedValue, setAppliedValue] = useState(0)
   const [isPanelOpen, setIsPanelOpen] = useState(false)
 
   const onApply = (): void => {
-    applyFilter(method, value)
+    setAppliedMethod(method)
+    setAppliedValue(value)
+
+    const filter = `amount__${method}=${value}`
+
+    applyFilter(filter)
+    setIsPanelOpen(false)
   }
 
   const methodOptions = [
     {
-      label: 'exact',
-      value: 'Is Equal To'
+      value: 'exact',
+      label: 'Is Equal'
     },
     {
-      label: '__lte',
-      value: 'Is Less Than'
+      value: '__lte',
+      label: 'Is Less Than'
     },
     {
-      label: '__gte',
-      value: 'Is Greater Than'
+      value: '__gte',
+      label: 'Is Greater Than'
     },
     {
-      label: '__range',
-      value: 'Is Between'
+      value: '__range',
+      label: 'Is Between'
     }
-
   ]
 
   const getMethodDisplayValue = (key: string): string => {
@@ -54,6 +55,14 @@ const FilterPill: React.FunctionComponent<FilterPillProps> = ({ name, applyFilte
     if (option !== undefined) return option.label
 
     return ''
+  }
+
+  const getPillDisplayValue = (): string => {
+    if (appliedMethod !== '' && !isNaN(appliedValue)) {
+      return `${getMethodDisplayValue(appliedMethod)} ${appliedValue}`
+    }
+
+    return name
   }
 
   return (
@@ -77,31 +86,17 @@ const FilterPill: React.FunctionComponent<FilterPillProps> = ({ name, applyFilte
             </Space>
             <Button type="primary" block onClick={() => { onApply() }}>Apply</Button>
           </Space>
-        </Card>
-      }
-
+        </Card>}
         <Button
           type="dashed"
           size="small"
           icon={<PlusCircleOutlined />}
           onClick={() => { setIsPanelOpen(true) }}
         >
-          { isNaN(value) ? name : `${getMethodDisplayValue(method)} ${value}` }
+          { getPillDisplayValue() }
         </Button>
     </PillWrapper>
   )
 }
 
-const TableFilterBar: React.FunctionComponent = () => {
-  // const dataDimensions = useSelector((state: Store) => state.constants.value.dataDimensions)
-
-  const applyAmountFilter = (method: string, value: number): void => {
-    console.log(method, value)
-  }
-
-  return <Wrapper>
-    <FilterPill name="Amount" applyFilter={applyAmountFilter} />
-  </Wrapper>
-}
-
-export default TableFilterBar
+export default QuantityTableFilter

@@ -7,18 +7,18 @@ import { useSelector } from 'react-redux'
 import { type Rule, type DataOwner, type DataDomain } from 'types'
 import { type Store } from 'store/index'
 import { TABLE_PAGE_SIZE } from 'utils'
-import TableFilterBar from 'library/table-filter-bar'
+import TableFilterBar from 'pages/rules/components/rule-table-filters'
 
 const { Title } = Typography
 
-interface RulesTableProps {
+interface Props {
   rules: Rule[]
   setIsFormVisible: (value: boolean) => void
-  getRulePage: (page: number) => void
+  getRulePage: (page: number, filter: string) => void
   total: number
 }
 
-const RulesTable: React.FC<RulesTableProps> = ({ rules, setIsFormVisible, getRulePage, total }) => {
+const RulesTable: React.FC<Props> = ({ rules, setIsFormVisible, getRulePage, total }) => {
   const dataDimensions: any = useSelector((state: Store) => state.constants.value.dataDimensions)
 
   const columns: ColumnsType<Rule> = [
@@ -108,7 +108,7 @@ const RulesTable: React.FC<RulesTableProps> = ({ rules, setIsFormVisible, getRul
           Add Rule
         </Button>
       </TableHeader>
-    <TableFilterBar />
+    <TableFilterBar onFilterChanged={(filter: string) => { getRulePage(1, filter) }}/>
     <Table
     size = "small"
     columns={columns}
@@ -117,7 +117,7 @@ const RulesTable: React.FC<RulesTableProps> = ({ rules, setIsFormVisible, getRul
     pagination={{
       pageSize: TABLE_PAGE_SIZE,
       total,
-      onChange: getRulePage
+      onChange: (page) => { getRulePage(page, '') }
     }}
      />
     </div>

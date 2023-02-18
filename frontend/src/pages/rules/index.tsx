@@ -12,10 +12,10 @@ const Rules: React.FunctionComponent = () => {
   const [total, setTotal] = useState<number>(0)
   const [isFormVisible, setIsFormVisible] = useState(false)
 
-  const getRules = async (page: number): Promise<void> => {
+  const getRules = async (page: number, filter: string): Promise<void> => {
     const offset = (page - 1)
     try {
-      const response = await RulesAPI.get(`rules?offset=${offset * TABLE_PAGE_SIZE}&limit=${TABLE_PAGE_SIZE}`)
+      const response = await RulesAPI.get(`rules/?${filter}&offset=${offset * TABLE_PAGE_SIZE}&limit=${TABLE_PAGE_SIZE}`)
       setRules(response.data.results)
       setTotal(response.data.total)
     } catch (error) {
@@ -24,7 +24,7 @@ const Rules: React.FunctionComponent = () => {
   }
 
   useEffect(() => {
-    void getRules(1)
+    void getRules(1, '')
   }, [])
 
   const insertNewRule = (rule: any): void => {
@@ -35,8 +35,8 @@ const Rules: React.FunctionComponent = () => {
     setRules(filteredRules)
   }
 
-  const getRulePage = (page: number): void => {
-    void getRules(page)
+  const getRulePage = (page: number, filter: string): void => {
+    void getRules(page, filter)
   }
 
   return (

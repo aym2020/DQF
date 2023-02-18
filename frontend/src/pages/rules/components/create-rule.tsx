@@ -8,11 +8,11 @@ import { type Store } from 'store/index'
 
 const { Option } = Select
 
-interface RulesTableProps {
+interface Props {
   insertNewData: (value: Rule) => void
 }
 
-const AddRule: React.FC<RulesTableProps> = ({ insertNewData }) => {
+const AddRule: React.FC<Props> = ({ insertNewData }) => {
   const dataDimensions = useSelector((state: Store) => state.constants.value.dataDimensions)
 
   // DataOwners
